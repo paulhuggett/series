@@ -9,16 +9,11 @@ const margin = {
     bottom: 20,
     left: 40
 };
-const box_width = 500;
-const box_height = 250;
-
 var random = d3.randomUniform (0, 1),
     data = d3.range(n).map((d) => { return 0; }),
     duration = 1000;
 
-var svg = d3.select ("svg")
-    .attr ("width", box_width)
-    .attr ("height", box_height);
+var svg = d3.select ("svg");
 var width = +svg.attr ("width") - margin.left - margin.right,
     height = +svg.attr ("height") - margin.top - margin.bottom;
 
