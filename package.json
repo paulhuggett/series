@@ -1,0 +1,28 @@
+{
+  "name": "series",
+  "version": "1.0.0",
+  "description": "",
+  "main": "series.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulhuggett/series.git"
+  },
+  "author": "Paul Bowen-Huggett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulhuggett/series/issues"
+  },
+  "homepage": "https://github.com/paulhuggett/series#readme",
+  "devDependencies": {
+    "eslint": "^6.2.0",
+    "eslint-config-google": "^0.13.0",
+    "eslint-config-standard": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}
