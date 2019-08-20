@@ -14,31 +14,33 @@
   const random = d3.randomUniform(0, 1);
   const duration = 1000;
 
-  const data = d3.range(n).map((d)=> {
-    return 0;
-  });
+  const x2Domain = (t) => {
+    return [t - ((n - 1) * duration), t];
+  };
+
+  const data = [];
 
   const svg = d3.select('svg');
   const width = +svg.attr('width') - margin.left - margin.right;
   const height = +svg.attr('height') - margin.top - margin.bottom;
 
-  let time = Date.now();
   const g = svg.append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-  const x = d3.scaleLinear().domain([0, n - 1]).range([0, width]);
 
-  const x2Domain = (t) => {
-    return [t, t + (n - 1) * duration];
-  };
+  const x = d3.scaleLinear()
+      .domain(x2Domain(Date.now()))
+      .range([0, width]);
 
-  const x2 = d3.scaleLinear().domain(x2Domain(time)).range([0, width]);
-  const y = d3.scaleLinear().domain([0, 1]).range([height, 0]);
+  const y = d3.scaleLinear()
+      .domain([0, 1])
+      .range([height, 0]);
+
   const line = d3.line()
       .x((d, i) => {
-        return x(i);
+        return x(d.time);
       })
       .y((d, i) => {
-        return y(d);
+        return y(d.value);
       });
 
   g.append('defs')
@@ -51,7 +53,7 @@
   const xAxis = g.append('g')
       .attr('class', 'axis axis--x')
       .attr('transform', 'translate(0,' + y(0) + ')')
-      .call(d3.axisBottom(x2)
+      .call(d3.axisBottom(x)
           .tickFormat(d3.timeFormat(timeFormat))
       );
 
@@ -69,14 +71,28 @@
       .ease(d3.easeLinear)
       .on('start', tick);
 
+  let mult = 1;
+  setInterval(() => {
+    if (mult > 1) {
+      mult = 1;
+    } else {
+      mult = 2;
+    };
+  }, 60 * 1000);
+
+
   function tick() {
-    time = time + duration;
-    x2.domain(x2Domain(time));
+    x.domain(x2Domain(Date.now()));
 
     // Push a new data point onto the back.
-    data.push(random());
-    // data.push (time);
-    y.domain([0, Math.max(1.0, d3.max(data))]);
+    data.push({
+      time: Date.now(),
+      value: random() * mult,
+    });
+
+    y.domain([0, Math.max(1.0, d3.max(data, (d) => {
+      return d.value;
+    }))]);
 
     // Redraw the line.
     d3.select(this)
@@ -86,8 +102,9 @@
     if (data.length > n) {
       data.shift();
     }
+    const distance = x(0) - x(duration);
     d3.active(this)
-        .attr('transform', 'translate(' + x(-1) + ',0)')
+        .attr('transform', 'translate(' + distance + ',0)')
         .transition()
         .on('start', tick);
 
@@ -95,7 +112,7 @@
         .transition()
         .duration(duration)
         .ease(d3.easeLinear)
-        .call(d3.axisBottom(x2)
+        .call(d3.axisBottom(x)
             .tickFormat(d3.timeFormat(timeFormat))
         );
 
