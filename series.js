@@ -77,7 +77,7 @@
       mult = 1;
     } else {
       mult = 2;
-    };
+    }
   }, 60 * 1000);
 
 
@@ -89,6 +89,9 @@
       time: Date.now(),
       value: random() * mult,
     });
+    if (data.length > n) {
+      data.shift();
+    }
 
     y.domain([0, Math.max(1.0, d3.max(data, (d) => {
       return d.value;
@@ -99,9 +102,6 @@
         .attr('d', line)
         .attr('transform', null);
 
-    if (data.length > n) {
-      data.shift();
-    }
     const distance = x(0) - x(duration);
     d3.active(this)
         .attr('transform', 'translate(' + distance + ',0)')
