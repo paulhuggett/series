@@ -102,9 +102,8 @@
         .attr('d', line)
         .attr('transform', null);
 
-    const distance = x(0) - x(duration);
     d3.active(this)
-        .attr('transform', 'translate(' + distance + ',0)')
+        .attr('transform', 'translate(' + (x(0) - x(duration)) + ',0)')
         .transition()
         .on('start', tick);
 
