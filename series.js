@@ -13,9 +13,11 @@
   };
   const random = d3.randomUniform(0, 1);
   const duration = 1000;
+  const curve = d3.curveBasis; // d3.curveLinear
+  const offset = 2; // set to 2 if curve===curveBasis, 1 if curveLinear
 
   const xDomain = (t) => {
-    return [t - ((n - 1) * duration), t - duration];
+    return [t - ((n - offset) * duration), t - (offset * duration)];
   };
 
   const data = [];
@@ -41,7 +43,8 @@
       })
       .y((d, i) => {
         return y(d.value);
-      });
+      })
+      .curve (curve);
 
   g.append('defs')
       .append('clipPath')
