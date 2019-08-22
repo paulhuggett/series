@@ -3,7 +3,7 @@
 (function() {
   'use strict';
 
-  const n = 40;
+  const n = 20;
   const timeFormat = '%H:%M:%S';
   const margin = {
     top: 20,
@@ -14,8 +14,8 @@
   const random = d3.randomUniform(0, 1);
   const duration = 1000;
 
-  const x2Domain = (t) => {
-    return [t - ((n - 1) * duration), t];
+  const xDomain = (t) => {
+    return [t - ((n - 1) * duration), t - duration];
   };
 
   const data = [];
@@ -28,7 +28,7 @@
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
   const x = d3.scaleLinear()
-      .domain(x2Domain(Date.now()))
+      .domain(xDomain(Date.now()))
       .range([0, width]);
 
   const y = d3.scaleLinear()
@@ -82,7 +82,7 @@
 
 
   function tick() {
-    x.domain(x2Domain(Date.now()));
+    x.domain(xDomain(Date.now()));
 
     // Push a new data point onto the back.
     data.push({
