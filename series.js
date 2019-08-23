@@ -85,17 +85,18 @@
 
 
   function tick() {
-    x.domain(xDomain(Date.now()));
+    const time = Date.now();
 
     // Push a new data point onto the back.
     data.push({
-      time: Date.now(),
+      time: time,
       value: random() * mult,
     });
     if (data.length > n) {
       data.shift();
     }
 
+    x.domain(xDomain(time));
     y.domain([0, Math.max(1.0, d3.max(data, (d) => {
       return d.value;
     }))]);
