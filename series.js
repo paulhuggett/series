@@ -73,7 +73,9 @@
         .append('path')
         .datum(data)
         .attr('class', 'line')
-        .transition().duration(duration).ease(d3.easeLinear)
+        .transition()
+        .duration(duration)
+        .ease(d3.easeLinear)
         .on('start', tick);
 
     let mult = 1;
@@ -104,7 +106,7 @@
             .attr('transform', null);
 
         const t = d3.transition()
-            .duration(1000)
+            .duration(duration)
             .ease(d3.easeLinear);
 
         xAxis.transition(t).call(xAxisCall);
