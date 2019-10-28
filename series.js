@@ -7,7 +7,7 @@
     'use strict';
 
     function series (pull) {
-        const n = 20;
+        const n = 20; // The number of data points shown.
         const timeFormat = '%H:%M:%S';
         const margin = {
             top: 20,
