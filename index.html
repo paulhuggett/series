@@ -13,7 +13,12 @@
 </head>
 <body>
     <svg width="520" height="250"></svg>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="series.js"></script>
+    <script type="module">
+      import * as ds from 'https://d3js.org/d3.v7.min.js'
+      import { series } from './series.js'
+
+      const random = d3.randomUniform (0, 1);
+      series (time => random ());
+    </script>
 </body>
 </html>
